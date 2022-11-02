@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 객체생성
+        ko = new MessageBeanKo(); 와 동일
+     -->
+    <bean class="sample01.MessageBeanKo" id="ko"></bean>
+
+    <!--
+    scope에 기본타입은 싱글톤임
+    scope에 prototype을 넣으면 지연초기화라고 해서 필요할때마다 계속 객체를 만들어줌 getBean을 할때마다 생성 따라서 같은 아이디라도 주소값이 달라짐
+    -->
+    <bean class="sample01.MessageBeanEn" id="en" scope="prototype"></bean>
+
+    <bean class="sample01.MessageBeanEn" id="en2"></bean>
+</beans>
