@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 외부의 bean설정문서 연결 이렇게 설정하면 springDIList01안에 들어있는 cu1~cu5까지 사용할 수 있다 -->
+    <import resource="springDIList01.xml"/>
+
+    <bean class="sample06.ListBean" id="listBean">
+        <property name="numbers">
+<!--            이 list 태그는 map이면 map, set이면 set, array면 array로 바꿔서 하면된다-->
+            <list>
+                <value>10</value>
+                <value>30</value>
+                <value>40</value>
+                <value>50</value>
+                <value>70</value>
+                <value>80</value>
+            </list>
+        </property>
+
+        <property name="strings">
+            <list>
+                <value>사과</value>
+                <value>딸기</value>
+                <value>포도</value>
+                <value>바나나</value>
+                <value>배</value>
+            </list>
+        </property>
+
+        <property name="customers">
+            <list>
+                <!--위쪽에 springDIList01.xml을 import해줬기 때문에 아래 cu1~6을 사용가능 -->
+                <ref bean="cu1"/>
+                <ref bean="cu2"/>
+                <ref bean="cu3"/>
+                <ref bean="cu4"/>
+                <ref bean="cu5"/>
+                <!--위에서처럼 불러와서 사용할 수 도 있고 아니면 여기서 바로 객체생성해서 사용할수도 있음-->
+                <bean class="sample06.Customer">
+                    <property name="id" value="hyeok"/>
+                    <property name="age" value="22"/>
+                    <property name="addr" value="광주"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+</beans>

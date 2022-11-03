@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+<!-- 1. properties 파일 등록하는방법 1
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        // properties파일을 하나만 넣을꺼면 location, 여러개 넣을거면 locations 인텔리제이는 classpath가 없어도됨
+        <property name="location" value="classpath:customerInfo01.properties"/>
+    </bean>
+-->
+
+<!--  2. properties 파일 등록하는방법 2
+    여러개의 properties파일을 등록하는 방법 - 근데 그냥 locations로 쓸것 locations에 하나만 써도 상관없음    -->
+<!--    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>customerInfo01.properties</value>
+                <value>customerInfo02.properties</value>
+            </array>
+        </property>
+    </bean>-->
+
+    <!-- 3. properties 파일 등록하는방법 3 [best]
+        위의 두개의 과정을 사용하기보단 얘를 사용하는게 더 좋음 얘를 쓸것-->
+    <context:property-placeholder location="sample06/customerInfo01.properties, sample06/customerInfo02.properties"/>
+
+    <bean class="sample06.Customer" id="cu1"/>
+
+    <bean class="sample06.Customer" id="cu2">
+        <constructor-arg value="gyu"/>
+        <property name="age" value="28"/>
+        <property name="addr" value="서울"/>
+    </bean>
+
+    <!--위쪽에 xmlns:p="http://www.springframework.org/schema/p"를 추가하고 p:을 쓰면 p가 property를 대체해줌-->
+    <bean class="sample06.Customer" id="cu3" p:addr="제주도" p:age="25" p:id="king"/>
+
+    <!--외부의 properties 파일에 있는 key로 value사용 :
+        - xml 파일에서 외부의 properties파일의 key를 사용하는 방법
+            1. ${key}
+            2. 위쪽에 외부의 properties파일의 위치를 설정
+    -->
+
+    <bean class="sample06.Customer" id="cu4" p:id="${id}" p:age="${age}" p:addr="${addr}"/>
+    <bean class="sample06.Customer" id="cu5" p:id="${cu.id}" p:age="${cu.age}" p:addr="${cu.addr}"/>
+
+</beans>
