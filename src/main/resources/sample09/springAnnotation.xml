@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+    @Autowired - 의존관계 자동설정(생성자, 필드, 메소드)를 사용하려면 AutowiredAnnotationBeanPostProcessor bean으로 등록해야한다
+  byType기준!!!!! 만약에 동일한 객체 여러개인경우에는
+  id와 property명이 일치하는 객체를 찾아서 주입(byName)
+    -->
+<!--
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+-->
+
+    <!--
+    - RequiredAnnotationBeanPostProcessor
+    - AutowiredAnnotationBeanPostProcessor
+    - CommonAnnotationBeanPostProcessor
+    등등등을 자동으로 been으로 등록해주는 설정
+    spring's @Required and @Autowired, @PostConstruct, @Qualifier
+    -->
+    <context:annotation-config/>
+
+
+    <!--객체생성-->
+    <bean class="sample09.EmpDTO" id="empDTO" p:empNo="100" p:name="규정" p:job="독수리"/>
+    <bean class="sample09.EmpDTO" id="dto2" p:empNo="200" p:name="희정" p:job="강아지">
+        <qualifier value="aa"/>
+    </bean>
+    <bean class="sample09.EmpService" id="service"/>
+    <bean class="sample09.EmpController" id="controller"/>
+
+    <bean class="sample09.ResourceBeen" id="resource"/>
+
+</beans>
