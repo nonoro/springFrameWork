@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- name, age, addr을 넣은 memberVO객체 생성 p는 무조건 setter만됨 constructor는 못씀   -->
+    <bean class="sample07.MemberVO" id="member" p:name="준혁" p:age="28" p:addr="쌍용아파트"/>
+    <bean class="sample07.MemberVO" id="memberVO" p:name="규정" p:age="28" p:addr="송파구"/>
+
+
+ <!--   &lt;!&ndash; 생성자에 위에만든 객체를 넣어줌 &ndash;&gt;
+    <bean class="sample07.MemberVOController" id="controller">
+        <constructor-arg ref="memberVO"/>
+        <constructor-arg ref="memberVO"/>
+    </bean>-->
+
+  <!--  &lt;!&ndash; setter에 위에서 만든 객체를 넣어줌 &ndash;&gt;
+    <bean class="sample07.MemberVOController" id="controller2">
+        <property name="member" ref="memberVO"/>
+        <property name="memberVO" ref="memberVO"/>
+    </bean>-->
+
+
+ <!--    autowire 속성 : xml태그를 간소화 (byType, byName은 무조건 setter가 있어야됨)
+        1) byType : 무조건 setXxx() 자동호출 : type이 같은 객체를 찾아서 자동으로 set으로 주입한다
+                                               근데 얘는 같은 타입의 객체가 1개보다 더 많게되면 실행이 안됨 어떤 변수에 뭘넣을지 몰라서
+                                               결론) byType은 bean에서 동일한 타입의 객체생성이 하나만 있어야됨
+                                                     만약 동일한 타입의 객체생성이 2개이상일 경우 byType은 안된다 따라서 byName을 사용해야함
+                                                     얘는 사용하는 이유는 객체생성이 1개이기때문에 byName처럼 부여한 id와 java에 property이름이 같든 말든 상관이없어서
+                                                     생성 객체가 한개일때 많이 씀
+
+        2) byName : setXxx() 자동호출 : xml에 객체생성시 부여한 id와 java에 property이름(java에서 맴버변수 선언한 이름)이 동일한 객체를 찾아서 주입
+                                        얘는 만약 변수가 3갠대 객체생성 2개만해도 그냥 그 id랑 똑같은 2개의 객체에 set만 실행되고 에러는 안남
+
+        3) constructor : 생성자를 자동으로 호출
+                         먼저, byType으로 찾고 만약 동일한 객체가 여러개 있을 경우는 byName으로 찾는다.
+                         여기서 byName은 xml의 id와 java의 생성자의 parameter이름과 동일!!! 만약 다르면 에러는 안뜨는데 이름이 다른 매개변수를 가진 생성자는 호출이안됨
+
+-->
+
+        <!-- autowire = byType -->
+<!--    <bean class="sample07.MemberVOController" id="controller" autowire="byType"/>-->
+
+        <!-- autowire = byName -->
+<!--    <bean class="sample07.MemberVOController" id="controller" autowire="byName"/>-->
+
+        <!-- autowire = constructor -->
+    <bean class="sample07.MemberVOController" id="controller" autowire="constructor"/>
+</beans>

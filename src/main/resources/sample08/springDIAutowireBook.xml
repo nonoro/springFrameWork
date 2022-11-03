@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--    객체생성 -->
+    <bean class="sample08.DbUtil" id="dbUtil"/>
+    <bean class="sample08.BookDAOImpl" id="bookDAO" autowire="constructor"/>
+    <bean class="sample08.EmailSender" id="emailSender"/>
+    <bean class="sample08.MessageSender" id="messageSender"/>
+    <bean class="sample08.BookServiceImpl" id="service" autowire="byType">
+        <constructor-arg ref="bookDAO"/>
+    </bean>
+    <bean class="sample08.BookDTO" id="bookDTO1" p:subject="수학" p:writer="권규정" p:price="20000" p:date="2022.02.14"/>
+    <bean class="sample08.BookDTO" id="bookDTO2" p:subject="영어" p:writer="이민호" p:price="25000" p:date="2021.03.14"/>
+    <bean class="sample08.BookController" id="controller" autowire="constructor"/>
+</beans>
